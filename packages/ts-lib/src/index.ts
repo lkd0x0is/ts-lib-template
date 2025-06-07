@@ -1,6 +1,6 @@
 /**
  * This is the main entry point for the ts-lib library.
- * It exports the {@link ts-lib#Calculator} class and related types.
+ * It exports the {@link @lkd0x0is/ts-lib-example#Calculator} class and related types.
  *
  * @packageDocumentation
  */
