@@ -2,6 +2,9 @@
   "name": "ts-lib-template",
   "private": "true",
   "packageManager": "pnpm@10.11.0",
+  "repository": {
+    "url": "https://github.com/lkd0x0is/ts-lib-template"
+  },
   "scripts": {
     "clean:cache": "rimraf ./node_modules/.cache/.tsbuildinfo",
     "clean": "pnpm -r clean && pnpm clean:cache",
