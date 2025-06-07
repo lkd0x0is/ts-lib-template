@@ -2,9 +2,8 @@ name: Deploy Docs
 
 on:
   push:
-    branches: [main] # Or your default branch
+    branches: [main]
 
-# Allow only one concurrent run of the docs deployment
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -13,34 +12,33 @@ jobs:
   deploy:
     name: Build & Deploy Docusaurus Site
     runs-on: ubuntu-latest
-    # Grant GITHUB_TOKEN the permissions required to deploy to GitHub Pages
     permissions:
-      contents: read # To checkout the code
-      pages: write # To deploy to GitHub Pages
-      id-token: write # To authenticate with OIDC (if applicable for certain deploy methods)
+      contents: read 
+      pages: write
+      id-token: write 
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Full history for Docusaurus if it uses git for last updated, etc.
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # Or your specific pnpm version
+          version: 10.11.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc" # Or specify directly e.g., '18.x'
+          node-version-file: ".nvmrc"
           cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build Docusaurus website
-        run: pnpm docs:build # Your root script: "pnpm docs:generate:api && pnpm --filter website build"
+        run: pnpm docs:build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -48,11 +46,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Docusaurus builds to `website/build` by default
           path: website/build
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        # This action will automatically deploy the artifact uploaded in the previous step.
-        # Ensure your repository settings (Settings > Pages) are configured for "GitHub Actions".

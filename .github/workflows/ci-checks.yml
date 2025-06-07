@@ -24,43 +24,32 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # Or your specific pnpm version from packageManager field
+          version: 10.11.0  
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc" # Or specify directly e.g., '18.x'
+          node-version-file: ".nvmrc" 
           cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Lint code
-        run: pnpm lint # Uses your root package.json script "lint": "biome check ."
-
-      # Biome `check` handles formatting as well, so a separate format check might be redundant
-      # If you had a `pnpm format:check`, you'd add it here.
+        run: pnpm lint 
 
       - name: Type check
-        run: pnpm typecheck # Uses your root package.json script for typechecking packages
+        run: pnpm typecheck 
 
       - name: Run tests
-        run: pnpm test -- --coverage # Runs tests for packages and enables coverage
+        run: pnpm test -- --coverage 
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: packages/*/coverage/ # Adjust if your coverage output path is different
-          if-no-files-found: warn # Don't fail if no coverage files are found (e.g., no tests)
+          path: packages/*/coverage/
+          if-no-files-found: warn 
 
       - name: Build packages
-        run: pnpm build # Uses your root package.json script to build library packages
-
-
-      # Optional: You could also upload build artifacts (dist folders) if needed for other jobs/workflows
-      # - name: Upload dist artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: dist-packages
-      #     path: packages/*/dist/
+        run: pnpm build 

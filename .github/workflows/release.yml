@@ -2,9 +2,8 @@ name: Release
 
 on:
   push:
-    branches: [main] # Or your default branch
+    branches: [main]
 
-# Allow only one concurrent run of the release workflow
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
@@ -12,58 +11,41 @@ concurrency:
 jobs:
   release:
     name: Version & Publish
-    if: github.repository_owner == 'test-github-username-or-org' # IMPORTANT: Prevent running on forks if repo is public
+    if: github.repository_owner == 'lkd0x0is' 
     runs-on: ubuntu-latest
     permissions:
-      contents: write # To push version commits, tags, and create releases
-      pull-requests: write # To create the "Version Packages" PR if configured that way
+      contents: write 
+      pull-requests: write 
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        # Ensure you fetch history for all tags and branches
-        # for Changesets to correctly determine version bumps
         with:
           fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # Or your specific pnpm version
+          version: 10.11.0  
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc" # Or specify directly e.g., '18.x'
+          node-version-file: ".nvmrc"
           cache: "pnpm"
-          registry-url: "https://registry.npmjs.org" # For publishing
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # The changesets/action handles detecting changesets, versioning,
-      # building, publishing, and creating GitHub releases.
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          # This command will run `pnpm changeset version` then `pnpm -r build` (if build script is configured)
-          # and `pnpm changeset publish`.
-          # For it to build packages correctly, ensure your root `package.json` or individual
-          # package.json files have a `build` script that Changesets can call,
-          # or specify a custom build command here.
-          # By default, `changeset version` updates files, and `changeset publish` publishes.
-          # The action can also create a PR with version bumps.
-          # If you want to commit version changes directly to main and publish:
           publish:
-            pnpm release # This command should handle build, versioning, and publishing.
-            # Your root "release" script: "pnpm -r --filter \"./packages/*\" build && changeset publish"
-            # The `changeset version` part is implicitly handled by the action before publish.
+            pnpm release 
           commit: "chore: update package versions and changelogs"
           title: "Upcoming Release"
-          # If you prefer the action to create a PR instead of committing to main:
-          # createGithubReleases: false # Set to true if publish command doesn't handle GitHub releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Needs to be configured in repository secrets
-          # PNPM_FLAGS: "--filter \"./packages/*\"" # If your build/publish needs filtering
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
