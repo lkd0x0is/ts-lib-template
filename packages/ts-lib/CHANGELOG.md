@@ -1,5 +1,11 @@
 # ts-lib
 
+## 1.1.0
+
+### Minor Changes
+
+- 78d9ef7: Change package name
+
 ## 1.0.0
 
 ### Major Changes
