@@ -1,0 +1,28 @@
+{
+  "name": "ts-lib-template",
+  "private": "true",
+  "packageManager": "pnpm@10.11.0",
+  "scripts": {
+    "clean:cache": "rimraf ./node_modules/.cache/.tsbuildinfo",
+    "clean": "pnpm -r clean && pnpm clean:cache",
+    "build": "pnpm -r --filter \"./packages/*\" --filter !_ build",
+    "test": "pnpm -r --filter \"./packages/*\" test",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r --filter \"./packages/*\" typecheck",
+    "changeset": "changeset",
+    "release": "pnpm -r --filter \"./packages/*\" build && changeset publish",
+    "docs:generate:api": "pnpm --filter \"./packages/*\" docs:generate",
+    "docs:dev": "pnpm --filter website start",
+    "docs:build": "pnpm docs:generate:api && pnpm --filter website build",
+    "docs:deploy": "pnpm --filter website deploy",
+    "template:init": "node ./scripts/init-project.mjs",
+    "package:create": "node ./scripts/create-package.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "2.29.4",
+    "rimraf": "6.0.1",
+    "typescript": "5.8.3"
+  }
+}

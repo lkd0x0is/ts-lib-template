@@ -1,0 +1,52 @@
+{
+  "name": "--template--",
+  "version": "0.0.0",
+  "description": "{{PACKAGE_DESCRIPTION}}",
+  "author": "{{AUTHOR_NAME}} <{{AUTHOR_EMAIL}}>",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist/**/*", "etc/**/*.md"],
+  "scripts": {
+    "clean": "rimraf dist temp coverage docs-markdown tsconfig.tsbuildinfo",
+    "_ensure_dirs": "mkdir -p etc temp dist docs-markdown",
+    "_build:declarations": "tsc -p tsconfig.build.json",
+    "_build:js": "rollup -c",
+    "_build:api": "api-extractor run --local",
+    "build": "pnpm clean && pnpm _ensure_dirs && pnpm _build:declarations && pnpm _build:js && pnpm _build:api",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit",
+    "docs:generate": "api-documenter markdown -i ./temp -o ./docs-markdown"
+  },
+  "engines": {
+    "node": ">=22.16"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "2.29.4",
+    "@microsoft/api-documenter": "7.26.27",
+    "@microsoft/api-extractor": "7.52.8",
+    "@rollup/plugin-alias": "5.1.1",
+    "@rollup/plugin-commonjs": "28.0.3",
+    "@rollup/plugin-node-resolve": "16.0.1",
+    "@rollup/plugin-terser": "0.4.4",
+    "rimraf": "6.0.1",
+    "rollup": "4.41.1",
+    "rollup-plugin-esbuild": "6.2.1",
+    "typescript": "5.8.3",
+    "vitest": "3.1.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

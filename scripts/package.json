@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "chalk": "5.4.1",
+    "fs-extra": "11.3.0",
+    "inquirer": "12.6.3",
+    "replace-in-file": "8.3.0",
+    "diff": "^8.0.2",
+    "glob": "^11.0.2"
+  }
+}

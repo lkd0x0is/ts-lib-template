@@ -1,0 +1,8 @@
+blank_issues_enabled: false # Set to true if you want to allow users to open blank issues
+contact_links:
+  - name: 📖 Contribution Guidelines
+    url: ../../CONTRIBUTING.md 
+    about: Please review our contribution guidelines before submitting issues or PRs.
+  - name: 💬 Project Discussions / Q&amp;A
+    url: https://github.com/&lt;OWNER&gt;/&lt;REPO&gt;/discussions
+    about: Have a question or want to discuss something? Check out our GitHub Discussions.
