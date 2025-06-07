@@ -1,5 +1,11 @@
 # ts-lib
 
+## 1.1.3
+
+### Patch Changes
+
+- 4ab1d14: Update docs
+
 ## 1.1.2
 
 ### Patch Changes
