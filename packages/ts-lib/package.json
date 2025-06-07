@@ -1,5 +1,5 @@
 {
-  "name": "ts-lib",
+  "name": "@lkd0x0is/ts-lib-example",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -12,10 +12,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist/**/*",
-    "etc/**/*.md"
-  ],
+  "files": ["dist/**/*", "etc/**/*.md"],
   "scripts": {
     "clean": "rimraf dist temp coverage docs-markdown tsconfig.tsbuildinfo",
     "_ensure_dirs": "mkdir -p etc temp dist docs-markdown",
