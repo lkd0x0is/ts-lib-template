@@ -1,6 +1,6 @@
 # TS-Lib: Advanced Calculator Utility
 
-[![npm version](https://badge.fury.io/js/ts-lib.svg)](https://badge.fury.io/js/ts-lib) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/lkd0x0is/ts-lib-template/LICENSE.md)
+[![npm version](https://badge.fury.io/js/@lkd0x0is%2Fts-lib-example.svg)](https://badge.fury.io/js/@lkd0x0is%2Fts-lib-example.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/lkd0x0is/ts-lib-template/LICENSE.md)
 
 `ts-lib-example` is a TypeScript library providing an advanced calculator with features like precision control, chained operations, history tracking, and extensibility via custom operations. It serves as an example package within the [TypeScript Library Template](https://github.com/lkd0x0is/ts-lib-template).
 
