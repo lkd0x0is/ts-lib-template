@@ -1,5 +1,11 @@
 # ts-lib
 
+## 1.1.2
+
+### Patch Changes
+
+- b6a2d9f: Add link to repository
+
 ## 1.1.1
 
 ### Patch Changes
