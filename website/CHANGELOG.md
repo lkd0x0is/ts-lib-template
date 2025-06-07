@@ -1,5 +1,11 @@
 # website
 
+## 1.0.1
+
+### Patch Changes
+
+- 389009b: Update docs for lib example to properly reference npm package
+
 ## 1.0.0
 
 ### Major Changes
