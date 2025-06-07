@@ -1,6 +1,6 @@
 {
   "name": "--template--",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "{{PACKAGE_DESCRIPTION}}",
   "author": "{{AUTHOR_NAME}} <{{AUTHOR_EMAIL}}>",
   "license": "MIT",
@@ -15,7 +15,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist/**/*", "etc/**/*.md"],
+  "files": [
+    "dist/**/*",
+    "etc/**/*.md"
+  ],
   "scripts": {
     "clean": "rimraf dist temp coverage docs-markdown tsconfig.tsbuildinfo",
     "_ensure_dirs": "mkdir -p etc temp dist docs-markdown",
