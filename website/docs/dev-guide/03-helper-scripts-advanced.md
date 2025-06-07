@@ -7,7 +7,7 @@ slug: /dev-guide/helper-scripts-advanced
 
 This guide provides more detailed information, advanced usage tips, and troubleshooting advice for the helper scripts (`init-package.mjs` and `create-package.mjs`) located in the `scripts/` directory. These scripts are designed to streamline initial project setup and the creation of new packages.
 
-Ensure you have the necessary prerequisites mentioned in the main [README.md](../../../README.md) and that `devDependencies` like `fs-extra`, `inquirer`, `replace-in-file`, `glob`, and `diff` are installed in your root `package.json`.
+Ensure you have the necessary prerequisites mentioned in the main [README.md](https://github.com/lkd0x0is/ts-lib-template/blob/main/README.md) and that `devDependencies` like `fs-extra`, `inquirer`, `replace-in-file`, `glob`, and `diff` are installed in your root `package.json`.
 
 ## `scripts/init-package.mjs` (Project Initialization)
 
