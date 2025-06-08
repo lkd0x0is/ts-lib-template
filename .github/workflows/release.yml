@@ -1,21 +1,85 @@
-name: Release
+name: Release Pipeline
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  release:
-    name: Version & Publish
-    if: github.repository_owner == 'lkd0x0is' 
+  # =========================================================================================
+  # JOB 1: Run CI Checks (Lint, Test, Build)
+  # This job is a prerequisite for all other jobs.
+  # =========================================================================================
+  checks:
+    name: Lint, Test & Build
     runs-on: ubuntu-latest
     permissions:
-      contents: write 
-      pull-requests: write 
+      contents: read
+
+    outputs:
+      build-artifact-name: build-and-coverage-${{ github.run_id }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format code
+        run: pnpm format
+
+      - name: Lint code
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Run tests
+        run: pnpm test -- --coverage
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Upload Build & Coverage Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.checks.outputs.build-artifact-name }}
+          path: |
+            packages/*/dist/
+            packages/*/coverage/
+            packages/*/api/
+          if-no-files-found: warn
+
+  # =========================================================================================
+  # JOB 2: Deploy Documentation to GitHub Pages
+  # This job only runs on pushes to `main` and depends on the `checks` job.
+  # =========================================================================================
+  deploy-docs:
+    name: Build & Deploy Docs
+    needs: checks 
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -26,7 +90,64 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.11.0  
+          version: 10.11.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.checks.outputs.build-artifact-name }}
+          path: . 
+
+      - name: Generate API Docs from Artifacts
+        run: pnpm docs:generate:api
+
+      - name: Build Docusaurus website
+        run: pnpm docs:build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website/build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # =========================================================================================
+  # JOB 3: Create Release PR or Publish to npm
+  # This job also depends on `checks` and runs only on pushes to `main`.
+  # =========================================================================================
+  release:
+    name: Version & Publish
+    needs: checks 
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'lkd0x0is'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,10 +162,9 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish:
-            pnpm release 
+          publish: pnpm release
           commit: "chore: update package versions and changelogs"
           title: "Upcoming Release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
