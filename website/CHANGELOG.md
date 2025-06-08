@@ -1,5 +1,11 @@
 # website
 
+## 1.0.3
+
+### Patch Changes
+
+- b8d0722: Update process of docs generation in ci/cdd
+
 ## 1.0.2
 
 ### Patch Changes
