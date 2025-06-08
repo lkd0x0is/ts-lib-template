@@ -1,5 +1,11 @@
 # website
 
+## 1.0.2
+
+### Patch Changes
+
+- 4f1f2e0: Update links in docs
+
 ## 1.0.1
 
 ### Patch Changes
