@@ -49,6 +49,16 @@ export function getPackagesWithApiDocs(packagesBasePath: string): string[] {
 						fs.existsSync(path.join(apiDocsPath, "index.markdown")));
 				if (hasDocs) {
 					logger.info(` -> Found API docs for package: '${packageName}'`);
+
+					const apiEntries = fs.readdirSync(apiDocsPath, {
+						withFileTypes: true,
+					});
+
+					const docsNum = apiEntries.filter(
+						(v) => v.isFile() && v.name.includes("md"),
+					).length;
+
+					logger.info(`Found ${docsNum} API markdown docs`);
 				}
 				return hasDocs;
 			})

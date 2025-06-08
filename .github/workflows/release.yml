@@ -110,9 +110,6 @@ jobs:
           name: ${{ needs.checks.outputs.build-artifact-name }}
           path: . 
 
-      - name: Generate API Docs from Artifacts
-        run: pnpm docs:generate:api
-
       - name: Build Docusaurus website
         run: pnpm docs:build
 
