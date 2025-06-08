@@ -38,6 +38,9 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Docusaurus website
+        run: pnpm docs:generate:api
+
+      - name: Build Docusaurus website
         run: pnpm docs:build
 
       - name: Setup Pages
