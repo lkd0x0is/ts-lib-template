@@ -1,8 +1,6 @@
 # TypeScript Library Monorepo Template
 
-[![CI Checks](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/ci-checks.yml/badge.svg)](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/ci-checks.yml)
 [![Release](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/release.yml/badge.svg)](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/release.yml)
-[![Docs Deploy](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/lkd0x0is/ts-lib-template/actions/workflows/deploy-docs.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive, opinionated template for building, testing, documenting, and publishing modern TypeScript libraries using a pnpm monorepo structure.
