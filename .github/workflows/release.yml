@@ -67,6 +67,7 @@ jobs:
             packages/*/dist/
             packages/*/coverage/
             packages/*/api/
+            packages/*/temp/
           if-no-files-found: warn
 
   # =========================================================================================
